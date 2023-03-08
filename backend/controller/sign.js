@@ -17,3 +17,20 @@ exports.in=(req,res,next)=>{
     console.log(err)
    })
 }
+exports.log=(req,res,next)=>{
+   const email=req.body.email
+   const pass=req.body.pass
+   User.findOne({where:{email:email}})
+   .then(user=>{
+      if(user.pass==pass){
+         res.json('success')
+      }
+      else{
+         res.json('error')
+      }
+   })
+   .catch(err=>{
+      console.log(err)
+      res.json('notfound')
+   })
+}
