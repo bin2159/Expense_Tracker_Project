@@ -11,13 +11,14 @@ async function check(e){
     console.log(myObj)
     try{
         let promise=await axios.post('http://localhost:4000/user/login',myObj)
+        console.log(promise)
         if(promise.data=='success'){
             alert('User logged in successfully')
         }
-        if(promise.data=='error'){
+        if(promise.status==401){
             alert('Incorrect Password')
         }
-        if(promise.data=='notfound'){
+        if(promise.status=404){
             alert('User not found')
         }
     }

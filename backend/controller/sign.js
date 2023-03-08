@@ -26,11 +26,11 @@ exports.log=(req,res,next)=>{
          res.json('success')
       }
       else{
-         res.json('error')
+         res.status(401).send()
       }
    })
    .catch(err=>{
       console.log(err)
-      res.json('notfound')
+      res.status(404).send()
    })
 }
