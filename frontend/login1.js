@@ -15,6 +15,7 @@ async function check(e) {
     .post("http://localhost:4000/user/login", myObj)
     .then((promise1) => {
       parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
+      window.location.href='/frontend/expenses.htm'
     })
     .catch((err) => {
         console.log(err)
