@@ -1,3 +1,4 @@
+
 let form1 = document.getElementById("form1");
 form1.addEventListener("submit", check);
 async function check(e) {
@@ -15,6 +16,7 @@ async function check(e) {
     .post("http://localhost:4000/user/login", myObj)
     .then((promise1) => {
       parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
+      localStorage.setItem('token',promise1.data.token)
       window.location.href='/frontend/expenses.htm'
     })
     .catch((err) => {
