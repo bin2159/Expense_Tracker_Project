@@ -3,6 +3,7 @@ exports.get=(req,res,next)=>{
     Expense.findAll({where:{userId:req.user.id}})
     //req.user.getExpenses()
     .then(exp=>{
+        console.log(exp)
         res.json(exp)
     })
     .catch(err=>{

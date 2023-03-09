@@ -13,7 +13,11 @@ const User=sequelize.define('user',{
         unique:true,
         primaryKey:true
     },
-    pass:Sequelize.STRING
+    pass:Sequelize.STRING,
+    ispremium:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
+    }
 
 })
 module.exports=User

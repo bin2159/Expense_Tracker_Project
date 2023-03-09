@@ -2,6 +2,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("token");
   let form = document.getElementById("form2");
   form.addEventListener("submit", store);
+  const pay=document.getElementById('pay')
+  pay.addEventListener('click',payment)
   let parentNode = document.getElementById("lists");
   getdata();
   async function store(e) {
@@ -74,4 +76,29 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     }
   }
+
+  async function payment(e){
+      const promise=await axios.get('http://localhost:4000/purchase/premiumpay',{headers:{'Authorization':token}})
+      console.log(promise)
+      let options={
+        "key":promise.data.key_id,
+        "order_id":promise.data.order.id,
+        handler:async function(promise){
+          await axios.post('http://localhost:4000/purchase/updatetransaction',{
+            order_id:options.order_id,
+            payment_id:options.key},
+            {headers:{"Authorization":token}}
+          )
+          alert('You are a Premium User')
+        }
+      }
+      const rzp1=new Razorpay(options)
+      rzp1.open()
+      e.preventDefault()
+      rzp1.on('paymennt.failed',function(promise){
+        console.log(promise)
+        alert('something went wrong')
+      })
+    }
+    
 });
