@@ -111,7 +111,8 @@ function showleaderboard(){
     }
     if (e.target.value == "d") {
       try {
-        await axios.delete(`http://localhost:4000/expense/del/${id}`,{headers:{"Authorization":token}});
+        let deletb=await axios.delete(`http://localhost:4000/expense/del/${id}`,{headers:{"Authorization":token}});
+        console.log(deletb)
         parentNode.removeChild(item);
       } catch (err) {
         console.log(err);
