@@ -123,6 +123,7 @@ function showleaderboard(){
 
   async function payment(e){
       const promise=await axios.get('http://localhost:4000/purchase/premiumpay',{headers:{'Authorization':token}})
+      console.log(promise.data.key_id)
       let options={
         "key":promise.data.key_id,
         "order_id":promise.data.order.id,
@@ -140,7 +141,7 @@ function showleaderboard(){
       const rzp1=new Razorpay(options)
       rzp1.open()
       e.preventDefault()
-      rzp1.on('paymennt.failed',function(promise){
+      rzp1.on('payment.failed',function(promise){
         console.log(promise)
         alert('something went wrong')
       })

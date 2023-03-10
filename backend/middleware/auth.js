@@ -3,9 +3,9 @@ const User=require('../model/user')
 const authenticate=(req,res,next)=>{
     try{
         const token=req.header('Authorization')
-        console.log(token)
+        
         const user=jwt.verify(token,'secretkey')
-        console.log('userid>>>>>>>>>>>>',user)
+    
         User.findByPk(user.userid)
         .then(user=>{
             req.user=user

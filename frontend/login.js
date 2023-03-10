@@ -13,17 +13,12 @@ async function signup(e) {
   parentNode = document.getElementById("text");
   parentNode.innerHTML = "";
   try {
-    axios
-      .post("http://localhost:4000/user/signin", myObj)
-      .then((promise1) => {
-        parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
-      })
-      .catch((err) => {
-        parentNode.innerHTML += `<h3>${err.response.data.message}</h3>`;
-      });
+    let promise1 = await axios.post("http://localhost:4000/user/signin", myObj);
+    parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
+    window.location.href='/frontend/login1.htm'
   } catch (err) {
     console.log(err);
+    parentNode.innerHTML += `<h3>${err.response.data.message}</h3>`;
   }
 }
-
 

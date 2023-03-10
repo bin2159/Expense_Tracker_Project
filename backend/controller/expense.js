@@ -1,5 +1,6 @@
 const Expense = require("../model/expense");
 const User = require("../model/user");
+const { transaction } = require("../util/database");
 const sequelize = require("../util/database");
 exports.get = async (req, res, next) => {
   try {
@@ -40,12 +41,19 @@ exports.find = async (req, res, next) => {
   }
 };
 exports.del = async (req, res, next) => {
+    const t=await sequelize.transaction()
   try {
     const id = req.params.id;
     let exp = await Expense.findByPk(id);
+    const totalExpense=Number(req.user.totalExpense)-Number(exp.examt)
+    await User.update({
+        totalExpense:totalExpense},
+        {where:{id:req.user.id},transaction:t})
     exp.destroy({ where: { userId: req.user.id } });
+    await t.commit()
     res.status(200).json({ success: true, message: "DELETED"});
   } catch (err) {
+    await t.rollback()
     res.status(500).json({success:false,error:err})
   }
 };

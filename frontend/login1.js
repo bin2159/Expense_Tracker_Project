@@ -24,3 +24,15 @@ async function check(e) {
       parentNode.innerHTML += `<h3>${err.response.data.message}</h3>`;
     });
 }
+forgotpassbtn()
+function forgotpassbtn(){
+  let fgt=document.createElement('input')
+  fgt.type='button'
+  fgt.value='Forgot Password'
+  form1.appendChild(fgt)
+  fgt.addEventListener('click',forgotpassfn)
+}
+function forgotpassfn(){
+  window.location.href='/frontend/forgotpass.htm'
+
+}

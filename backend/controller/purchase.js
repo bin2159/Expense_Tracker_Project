@@ -35,6 +35,7 @@ const updatetransaction=async (req,res,next)=>{
                 return res.status(202).json({success:'true',message:'Transaction Successful',token:usercontroller.generateToken(req.user.id,true)})
             })
             .catch((err)=>{
+                console.log('err1')
                 throw new Error(err)    
             })
             // order.update({paymentid:payment_id,status:'SUCCESSFUL'})
@@ -46,7 +47,8 @@ const updatetransaction=async (req,res,next)=>{
             // }).catch(err=>{throw new Error(err)})
     }
     catch(err){
-        console.log(err)
+        
+        console.log('err2')
     }
 }
 module.exports={
