@@ -1,5 +1,6 @@
 const Razorpay=require('razorpay')
 const Order=require('../model/order')
+const usercontroller=require('../controller/sign')
 const purchasepremium=async(req,res,next)=>{
     try{
         let rzp=new Razorpay({
@@ -31,7 +32,7 @@ const updatetransaction=async (req,res,next)=>{
         const Promise2=req.user.update({ispremium:true})
             Promise.all([Promise1,Promise2])
             .then(()=>{
-                return res.status(202).json({success:'true',message:'Transaction Successful'})
+                return res.status(202).json({success:'true',message:'Transaction Successful',token:usercontroller.generateToken(req.user.id,true)})
             })
             .catch((err)=>{
                 throw new Error(err)    

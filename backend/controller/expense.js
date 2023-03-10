@@ -1,4 +1,5 @@
 const Expense=require('../model/expense')
+const User=require('../model/user')
 exports.get=(req,res,next)=>{
     Expense.findAll({where:{userId:req.user.id}})
     //req.user.getExpenses()
@@ -12,13 +13,24 @@ exports.get=(req,res,next)=>{
 }
 exports.post=(req,res,next)=>{
     const {examt,desc,cat}=req.body
+    console.log(req.body)
     //req.user.createExpense
     Expense.create({examt,desc,cat,userId:req.user.id})
-    .then(()=>{
-        res.json('succuss')
+    .then((exp)=>{
+        const totalExpense=Number(req.user.totalExpense)+Number(exp.examt)
+        console.log(req.user.id)
+        User.update(
+            {totalExpense:totalExpense},
+            {where:{id:req.user.id}})
+        .then(()=>{
+            res.status(200).json({expense:exp})
+        })
+        .catch(err=>{
+            return  res.status(500).json({success:false,error:err})
+        })
     })
     .catch(err=>{
-        console.log(err)
+        return res.status(500).json({success:false,error:err})
     })
 }
 exports.find=(req,res,next)=>{

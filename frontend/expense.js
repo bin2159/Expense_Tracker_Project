@@ -27,12 +27,51 @@ window.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.log(err);
     }
+  }function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
+
+  const decoded=parseJwt(token)
+  console.log(decoded)
+  const ispremium=decoded.ispremium
+
+  if(ispremium){
+    showPremium()
   }
+  function showPremium(){
+    document.body.removeChild(pay)
+    document.getElementById('premium').innerHTML+='You are premium user'
+    showleaderboard()
+}
+
+function showleaderboard(){
+  const inputElement=document.createElement('input')
+  inputElement.type="button"
+  inputElement.value="Show Leaderboard"
+  document.body.appendChild(inputElement)
+  inputElement.onclick=async()=>{
+    const userLeaderboard=await axios.get('http://localhost:4000/premium/showleaderboard')
+    let leaderboard=document.getElementById('leaderboard')
+    leaderboard.innerHTML+=`<h1>Leaderboard<h1>`
+    console.log(userLeaderboard.data[0].id)
+    userLeaderboard.data.forEach((userDetails)=>{
+      leaderboard.innerHTML+=`<li>-${userDetails.name} TotalExpense--${userDetails.totalExpense}</li>`
+    })
+  }
+
+}
   async function getdata() {
     try {
       let promise = await axios.get("http://localhost:4000/expense/get", {
         headers: { Authorization: token },
       });
+      console.log(promise)
       for (let i = 0; i < promise.data.length; i++) {
         display(promise.data[i]);
       }
@@ -40,10 +79,13 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log(err);
     }
   }
+
   async function display(myObj) {
+    
     let childHTML = `<li id=${myObj.id} class='list'>${myObj.examt}--------${myObj.desc}--------${myObj.cat}
                     <button value='e'>Edit</button><button value='d'>Delete</button></li>`;
     parentNode.innerHTML += childHTML;
+    console.log(myObj)
     let li = document.getElementsByClassName("list");
     for (let i = 0; i < li.length; i++) {
       li[i].addEventListener("click", edit);
@@ -77,19 +119,21 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+
   async function payment(e){
       const promise=await axios.get('http://localhost:4000/purchase/premiumpay',{headers:{'Authorization':token}})
-      console.log(promise)
       let options={
         "key":promise.data.key_id,
         "order_id":promise.data.order.id,
         handler:async function(promise){
-          await axios.post('http://localhost:4000/purchase/updatetransaction',{
+          const res=await axios.post('http://localhost:4000/purchase/updatetransaction',{
             order_id:options.order_id,
             payment_id:options.key},
             {headers:{"Authorization":token}}
           )
           alert('You are a Premium User')
+          showPremium()
+          localStorage.setItem('token',res.data.token)
         }
       }
       const rzp1=new Razorpay(options)

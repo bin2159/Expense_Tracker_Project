@@ -1,7 +1,7 @@
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
 const jwt=require('jsonwebtoken')
-exports.in = async (req, res, next) => {
+async function login(req, res, next){
   try {
     const { name, email, pass } = req.body;
     bcrypt.hash(pass, 10, async (err, hash) => {
@@ -18,10 +18,10 @@ exports.in = async (req, res, next) => {
   }
 };
 
-function generateToken(id){
-  return jwt.sign({userid:id},'secretkey')
+function generateToken(id,premium){
+  return jwt.sign({userid:id,ispremium:premium},'secretkey')
 }
-exports.log = async (req, res, next) => {
+async function log(req, res, next){
   try {
     const { email, pass } = req.body;
     const user = await User.findOne({ where: { email } });
@@ -31,7 +31,7 @@ exports.log = async (req, res, next) => {
             throw new Error('Something Went Wrong')
          }
          if(respose){
-            res.status(200).json({ success: true, message: "User logged in sccussfully",token:generateToken(user.id)});
+            res.status(200).json({ success: true, message: "User logged in sccussfully",token:generateToken(user.id,user.ispremium)});
           } else {
             res.status(400).json({ success: false, message: "Incorrect Password" });
           }
@@ -58,3 +58,4 @@ exports.log = async (req, res, next) => {
   //    res.status(404).send()
   // })
 };
+module.exports={generateToken,log,login}
