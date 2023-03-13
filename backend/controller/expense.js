@@ -2,9 +2,10 @@ const Expense = require("../model/expense");
 const User = require("../model/user");
 const { transaction } = require("../util/database");
 const sequelize = require("../util/database");
+const Userservices=require('../service/userservices')
 exports.get = async (req, res, next) => {
   try {
-    let exp = await Expense.findAll({ where: { userId: req.user.id } });
+    let exp = await Userservices.getExpenses(req,{ where: { userId: req.user.id } });
     res.status(200).json(exp);
   } catch (err) {
     return res.status(500).json({ success: false, error: err });
@@ -42,6 +43,7 @@ exports.find = async (req, res, next) => {
 };
 exports.del = async (req, res, next) => {
     const t=await sequelize.transaction()
+    console.log(req.params.id)
   try {
     const id = req.params.id;
     let exp = await Expense.findByPk(id);

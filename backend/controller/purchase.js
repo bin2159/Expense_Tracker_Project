@@ -28,8 +28,8 @@ const updatetransaction=async (req,res,next)=>{
         const {payment_id,order_id} =req.body
         console.log('req body is',req.body)
         const order=await Order.findOne({where:{orderid:order_id}})
-        const Promise1=order.update({paymentid:payment_id,status:'SUCCESSFUL'})
-        const Promise2=req.user.update({ispremium:true})
+        const Promise1=await order.update({paymentid:payment_id,status:'SUCCESSFUL'})
+        const Promise2=await req.user.update({ispremium:true})
             Promise.all([Promise1,Promise2])
             .then(()=>{
                 return res.status(202).json({success:'true',message:'Transaction Successful',token:usercontroller.generateToken(req.user.id,true)})

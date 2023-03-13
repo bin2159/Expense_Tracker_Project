@@ -6,7 +6,7 @@ const User=require('./model/user')
 const Expense=require('./model/expense')
 const Forgotpassword=require('./model/forgotpassword')
 const Order=require('./model/order')
-
+const DownloadFiles=require('./model/downloadfiles')
 
 const enter=require('./routes/enter')
 const expense=require('./routes/expense')
@@ -34,6 +34,9 @@ Order.belongsTo(User)
 
 User.hasMany(Forgotpassword)
 Forgotpassword.belongsTo(User)
+
+User.hasMany(DownloadFiles)
+DownloadFiles.belongsTo(User)
 
 Sequelize
 .sync()
