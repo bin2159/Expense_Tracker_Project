@@ -53,10 +53,11 @@ async function download(req,res,next){
     const filename=`Expense${userId}/${new Date()}`
     const fileURL=await S3services.uploadToS3(stringifiedExpenses,filename)
     await Downloadfiles.create({
-        fileUrl:fileURL,
+        fileName:filename,
         userId:userId
     })
-    res.status(200).json({fileURL,success:true})
+    let files=await Downloadfiles.findAll({attributes:['fileName'],where:{userId:userId}})
+    res.status(200).json({fileURL,success:true,files})
 }
     catch(err){
         res.status(500).json({fileURL:'',success:false,error:err})

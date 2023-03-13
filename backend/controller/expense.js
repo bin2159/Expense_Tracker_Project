@@ -7,14 +7,15 @@ const Userservices = require("../service/userservices");
 exports.get = async (req, res, next) => {
   try {
     const page = req.query.page;
-    const ITEMS_PER_PAGE = 2;
+    const ITEMS_PER_PAGE = Number(req.query.limit);
     // let exp = await Userservices.getExpenses(req,{ where: { userId: req.user.id } });
     // res.status(200).json(exp);
-    let totalItems=await Expense.count()
-    let expense = await Expense.findAll({
+    let totalItems=await Expense.count({where:{userId:req.user.id}})
+    let expense = await Userservices.getExpenses(req,{
       offset: (page - 1) * ITEMS_PER_PAGE,
       limit: ITEMS_PER_PAGE,
-    });
+      where: { userId: req.user.id}
+    })
     res.json({
       expense: expense,
       pageData:{currentPage: page,
@@ -23,7 +24,6 @@ exports.get = async (req, res, next) => {
         hasPreviousPage: page > 1,
         previousPage: page - 1,
         lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),}
-      
     });
   } catch (err) {
     console.log(err)
@@ -34,7 +34,8 @@ exports.post = async (req, res, next) => {
   const t = await sequelize.transaction();
   try {
     const { examt, desc, cat } = req.body;
-    let exp = await Expense.create(
+    console.log(req.body)
+    let exp = await Userservices.create(req,
       { examt, desc, cat, userId: req.user.id },
       { transaction: t }
     );
@@ -46,6 +47,7 @@ exports.post = async (req, res, next) => {
     await t.commit();
     res.status(200).json({ expense: exp });
   } catch (err) {
+    console.log(err)
     await t.rollback();
     return res.status(500).json({ success: false, error: err });
   }

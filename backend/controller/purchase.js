@@ -4,8 +4,8 @@ const usercontroller=require('../controller/sign')
 const purchasepremium=async(req,res,next)=>{
     try{
         let rzp=new Razorpay({
-            key_id:'rzp_test_8880TEgx2VU5Zc',
-            key_secret:'dCBuj2LpHGjWMsOeikmAtxAy'
+            key_id:process.env.RAZORPAY_KEY_ID,
+            key_secret:process.env.RAZORPAY_KEY_SECRET
         })
         const amount=2500
         rzp.orders.create({amount,currency:'INR'},(err,order)=>{

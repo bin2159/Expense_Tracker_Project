@@ -1,6 +1,7 @@
 const express=require('express')
 const bodyParser=require('body-parser')
 const Sequelize=require('./util/database')
+require('dotenv').config()
 
 const User=require('./model/user')
 const Expense=require('./model/expense')

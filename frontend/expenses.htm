@@ -27,14 +27,26 @@
     </form>
     <button id="pay">Buy Premium</button>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <h1>Expense Tracker</h1>
     <ul id="lists">
-        <h1>Expense Tracker</h1>
     </ul>
     <table id="table">
     </table>
     <div id="premium"></div>
+    <div>
+        <select id="pagesize">
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+        </select>
+    </div>
+    <div id="pagination"></div>
     <ul id="leaderboard"></ul>
-    <div id="pagination"></div>  
+    
+    
+      
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="expense.js"></script>
 </body>

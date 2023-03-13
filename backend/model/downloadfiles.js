@@ -7,7 +7,6 @@ const Downloadfiles=sequelize.define('downloadfiles',{
         autoIncrement:true,
         primaryKey:true
     },
-    fileUrl:Sequelize.TEXT,
-    name:Sequelize.STRING
+    fileName:Sequelize.STRING
 })
 module.exports=Downloadfiles
