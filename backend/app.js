@@ -1,6 +1,12 @@
 const express=require('express')
 const bodyParser=require('body-parser')
 const Sequelize=require('./util/database')
+const cors=require('cors')
+const helmet=require('helmet')
+const compression=require('compression')
+const morgan=require('morgan')
+const fs=require('fs')
+const path=require('path')
 require('dotenv').config()
 
 const User=require('./model/user')
@@ -15,10 +21,13 @@ const payment=require('./routes/payment')
 const premium=require('./routes/premium')
 const password=require('./routes/password')
 
-const cors=require('cors')
+const accessLogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'})
 const app=express()
 
+app.use(helmet())
+app.use(compression())
 app.use(cors())
+app.use(morgan('combined',{stream:accessLogStream}))
 app.use(bodyParser.json({extended:false}))
 
 app.use('/user',enter)
@@ -42,7 +51,7 @@ DownloadFiles.belongsTo(User)
 Sequelize
 .sync()
 .then(()=>{
-    app.listen(4000)
+    app.listen(process.env.PORT||4000)
 })
 .catch(err=>{
     console.log(err)

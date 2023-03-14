@@ -18,9 +18,9 @@ const forgotpassword=async (req,res,next)=>{
             })
             const client=Sib.ApiClient.instance
             const apiKey=client.authentications['api-key']
-            apiKey.apiKey='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'
+            apiKey.apiKey=process.env.API_KEY
             const apiInstance=new Sib.TransactionalEmailsApi()
-            apiInstance.sendTransacEmail({
+            apiInstance.sendTransacEmail({  
                 to:[{email:email}],
                 sender:{email:"bipinthms007.bst@gmail.com"},
                 subject:"Sending with Send in blue",
