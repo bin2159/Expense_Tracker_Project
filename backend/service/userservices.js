@@ -8,16 +8,14 @@ const create=(req,data,t)=>{
 const getExpense=(req,where)=>{
     return req.user.getExpense(where)
 }
-const update=()=>{
-    
+const update=(req)=>{
+    return req.user.update()
 }
 const findByPk=(req,id)=>{
-    return res.user.getExpense({where:{userId:res.user.id}})
+    return req.user.getExpense({where:{userId:id}})
 }
 module.exports={
     getExpenses,
     create,
     getExpense,
-    findByPk,
-    update
 }
