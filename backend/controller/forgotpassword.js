@@ -25,7 +25,7 @@ const forgotpassword=async (req,res,next)=>{
                 sender:{email:"bipinthms007.bst@gmail.com"},
                 subject:"Sending with Send in blue",
                 textContent:"Click the attached link",
-                htmlContent:`<a href="http://localhost:4000/password/resetpassword/${id}">Reset password</a>`
+                htmlContent:`<a href="http://13.53.194.247:4000/password/resetpassword/${id}">Reset password</a>`
             })
             .then((respose)=>{return res.status(200).json({message:'Link to reset password send'})})
             .catch(err=>{throw new Error(err)})
@@ -51,7 +51,7 @@ const resetpassword=(req,res,next)=>{
                     console.log('called')
                 }
             </script>
-            <form action="http://localhost:4000/password/updatepassword/${id}" method="GET">
+            <form action="http://13.53.194.247:4000/password/updatepassword/${id}" method="GET">
                 <label for="newpassword">Enter New password</label>
                 <input name="newpassword" type="password" required></input>
                 <button>reset password</button>

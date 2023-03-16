@@ -17,7 +17,7 @@ async function check(e) {
     .then((promise1) => {
       parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
       localStorage.setItem('token',promise1.data.token)
-      window.location.href='/frontend/expenses.htm'
+      window.location.href='expenses.htm'
     })
     .catch((err) => {
         console.log(err)
@@ -33,6 +33,6 @@ function forgotpassbtn(){
   fgt.addEventListener('click',forgotpassfn)
 }
 function forgotpassfn(){
-  window.location.href='/frontend/forgotpass.htm'
+  window.location.href='forgotpass.htm'
 
 }
