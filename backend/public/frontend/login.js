@@ -1,5 +1,9 @@
 let form = document.getElementById("form");
 form.addEventListener("submit", signup);
+let href=document.getElementById('href')
+href.addEventListener('click',()=>{
+  window.location.assign('http://13.53.194.247:4000/login1.html')
+})
 async function signup(e) {
   e.preventDefault();
   let name = document.getElementById("name").value;
