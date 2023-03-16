@@ -7,7 +7,7 @@ async function resetp(e){
         email:email
     }
     try{
-    let promise=await axios.post(`http://localhost:4000/password/forgotpassword`,myObj)
+    let promise=await axios.post(`http://13.53.194.247:4000/password/forgotpassword`,myObj)
         console.log(promise)
     }
     catch(err){

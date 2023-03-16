@@ -13,7 +13,7 @@ async function signup(e) {
   parentNode = document.getElementById("text");
   parentNode.innerHTML = "";
   try {
-    let promise1 = await axios.post("http://localhost:4000/user/signin", myObj);
+    let promise1 = await axios.post("http://13.53.194.247:4000/user/signin", myObj);
     parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
     window.location.href='/frontend/login1.htm'
   } catch (err) {

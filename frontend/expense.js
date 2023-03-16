@@ -27,12 +27,12 @@ async function store(e) {
     cat: cat,
   };
   try {
-    await axios.post("http://localhost:4000/expense/post", myObj, {
+    await axios.post("http://13.53.194.247:4000/expense/post", myObj, {
       headers: { Authorization: token },
     });
-    // let promise = await axios.get(`http://localhost:4000/expense/get?page=${page}&limit=${pagesize}`, {
+    // let promise = await axios.get(`http://13.53.194.247:4000/expense/get?page=${page}&limit=${pagesize}`, {
     //   headers: { Authorization: token },
-    // });
+    // });http://13.53.194.247:4000/
     getdata(page);
   } catch (err) {
     console.log(err);
@@ -74,7 +74,7 @@ async function downloadbtn() {
   const div = document.getElementById("premium");
   div.appendChild(btn);
   btn.onclick = async () => {
-    let promise = await axios.get("http://localhost:4000/premium/download", {
+    let promise = await axios.get("http://13.53.194.247:4000/premium/download", {
       headers: { Authorization: token },
     });
     console.log(promise.data.files);
@@ -101,7 +101,7 @@ function showleaderboard() {
   div.appendChild(inputElement);
   inputElement.onclick = async () => {
     const userLeaderboard = await axios.get(
-      "http://localhost:4000/premium/showleaderboard",
+      "http://13.53.194.247:4000/premium/showleaderboard",
       { headers: { Authorization: token } }
     );
     let leaderboard = document.getElementById("leaderboard");
@@ -124,7 +124,7 @@ async function getdata(page) {
   try {
     parentNode.innerHTML = "";
     let promise = await axios.get(
-      `http://localhost:4000/expense/get?page=${page}&limit=${pagesize}`,
+      `http://13.53.194.247:4000/expense/get?page=${page}&limit=${pagesize}`,
       {
         headers: { Authorization: token },
       }
@@ -223,14 +223,14 @@ async function edit(e) {
   if (e.target.value == "e") {
     try {
       let promise = await axios.get(
-        `http://localhost:4000/expense/find/${id}`,
+        `http://13.53.194.247:4000/expense/find/${id}`,
         { headers: { Authorization: token } }
       );
       console.log(promise);
       document.getElementById("examt").value = promise.data.examt;
       document.getElementById("desc").value = promise.data.desc;
       document.getElementById("cat").value = promise.data.cat;
-      await axios.delete(`http://localhost:4000/expense/del/${id}`, {
+      await axios.delete(`http://13.53.194.247:4000/expense/del/${id}`, {
         headers: { Authorization: token },
       });
       item.parentElement.removeChild(item);
@@ -241,7 +241,7 @@ async function edit(e) {
   if (e.target.value == "d") {
     try {
       let deletb = await axios.delete(
-        `http://localhost:4000/expense/del/${id}`,
+        `http://13.53.194.247:4000/expense/del/${id}`,
         { headers: { Authorization: token } }
       );
       item.parentElement.removeChild(item);
@@ -252,7 +252,7 @@ async function edit(e) {
 }
 
 async function payment(e) {
-  const promise = await axios.get("http://localhost:4000/purchase/premiumpay", {
+  const promise = await axios.get("http://13.53.194.247:4000/purchase/premiumpay", {
     headers: { Authorization: token },
   });
   console.log(promise.data.key_id);
@@ -261,7 +261,7 @@ async function payment(e) {
     order_id: promise.data.order.id,
     handler: async function (promise) {
       const res = await axios.post(
-        "http://localhost:4000/purchase/updatetransaction",
+        "http://13.53.194.247:4000/purchase/updatetransaction",
         {
           order_id: options.order_id,
           payment_id: options.key,

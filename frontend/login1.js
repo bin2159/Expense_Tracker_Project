@@ -13,7 +13,7 @@ async function check(e) {
   parentNode.innerHTML = "";
 
   axios
-    .post("http://localhost:4000/user/login", myObj)
+    .post("http://13.53.194.247:4000/user/login", myObj)
     .then((promise1) => {
       parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
       localStorage.setItem('token',promise1.data.token)

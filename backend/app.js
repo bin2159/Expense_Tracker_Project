@@ -36,6 +36,10 @@ app.use('/purchase',payment)
 app.use('/premium',premium)
 app.use('/password',password)
 
+app.use((req,res)=>{
+    res.sendFile(path.join(__dirname,`../frontend/${res.url}`))
+})
+
 User.hasMany(Expense)
 Expense.belongsTo(User)
 
