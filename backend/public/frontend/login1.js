@@ -3,7 +3,7 @@ let form1 = document.getElementById("form1");
 form1.addEventListener("submit", check);
 let href=document.getElementById('href')
 href.addEventListener('click',()=>{
-  window.location.assign('http://13.53.194.247:4000/login.html')
+  window.location.assign('login.html')
 })
 async function check(e) {
   e.preventDefault();
@@ -21,7 +21,7 @@ async function check(e) {
     .then((promise1) => {
       parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
       localStorage.setItem('token',promise1.data.token)
-      window.location.assign('http://13.53.194.247:4000/expenses.htm')
+      window.location.assign('expenses.htm')
     })
     .catch((err) => {
         console.log(err)

@@ -2,7 +2,7 @@ let form = document.getElementById("form");
 form.addEventListener("submit", signup);
 let href=document.getElementById('href')
 href.addEventListener('click',()=>{
-  window.location.assign('http://13.53.194.247:4000/login1.html')
+  window.location.assign('login1.htm')
 })
 async function signup(e) {
   e.preventDefault();
@@ -19,7 +19,7 @@ async function signup(e) {
   try {
     let promise1 = await axios.post("http://13.53.194.247:4000/user/signin", myObj);
     parentNode.innerHTML += `<h3>${promise1.data.message}</h3>`;
-    window.location.href='/frontend/login1.htm'
+    window.location.assign('login1.htm')
   } catch (err) {
     console.log(err);
     parentNode.innerHTML += `<h3>${err.response.data.message}</h3>`;
