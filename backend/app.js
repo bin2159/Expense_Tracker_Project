@@ -24,7 +24,6 @@ const password=require('./routes/password')
 const accessLogStream=fs.createWriteStream(path.join(__dirname,'access.log'),{flags:'a'})
 const app=express()
 
-app.use(helmet())
 app.use(compression())
 app.use(cors())
 app.use(morgan('combined',{stream:accessLogStream}))
